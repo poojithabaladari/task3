@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS & JS Learning Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+      background: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .quiz, .api {
+      margin-top: 30px;
+    }
+
+    .question {
+      margin: 15px 0;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .result, .joke {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      body {
+        font-size: 14px;
+      }
+
+      .container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TASK-3 </h1>
+
+   
+    <div class="quiz">
+      <h2>Quiz</h2>
+      <div id="quiz-container">
+        <div class="question">
+          <p>1. What does CSS stand for?</p>
+          <select id="q1">
+            <option value="">-- Select --</option>
+            <option value="a">Creative Style Sheets</option>
+            <option value="b">Cascading Style Sheets</option>
+            <option value="c">Computer Style Sheets</option>
+          </select>
+        </div>
+        <div class="question">
+          <p>2. Which company developed JavaScript?</p>
+          <select id="q2">
+            <option value="">-- Select --</option>
+            <option value="a">Microsoft</option>
+            <option value="b">Netscape</option>
+            <option value="c">Google</option>
+          </select>
+        </div>
+        <button onclick="checkQuiz()">Submit Quiz</button>
+        <div class="result" id="quiz-result"></div>
+      </div>
+    </div>
+
+
+    <div class="api">
+      <h2>Get a Random Joke</h2>
+      <button onclick="fetchJoke()">Fetch Joke</button>
+      <div class="joke" id="joke-container"></div>
+    </div>
+  </div>
+
+  <script>
+  
+    function checkQuiz() {
+      const q1 = document.getElementById('q1').value;
+      const q2 = document.getElementById('q2').value;
+      let score = 0;
+
+      if (q1 === 'b') score++;
+      if (q2 === 'b') score++;
+
+      document.getElementById('quiz-result').textContent =
+        `You scored ${score}/2 correct!`;
+    }
+
+   
+    function fetchJoke() {
+      fetch('https://official-joke-api.appspot.com/random_joke')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('joke-container').innerHTML =
+            `${data.setup} <br><strong>${data.punchline}</strong>`;
+        })
+        .catch(err => {
+          document.getElementById('joke-container').textContent =
+            'Failed to fetch joke. Please try again.';
+        });
+    }
+  </script>
+</body>
+</html>
